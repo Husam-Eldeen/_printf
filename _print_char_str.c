@@ -7,54 +7,53 @@
  */
 int _printf(const char *format, ...)
 {
-  int chara_print = 0;
-  va_list list;
+	int chara_print = 0;
+	va_list list;
 
-  if (*format == NULL)
-  {
-    return (-1);
-  }
+	if (format == NULL)
 
-  va_start(list, format);
+		return (-1);
 
-  while (*format)
-    {
-      if (*format != '%')
-      {
-        write (1, format, 1);
-          chara_print++;
-      }
-      else
-      {
-        format++;
-        if (*format == '\0')
-          break;
+	va_start(list, format);
 
-        if (*format == '%')
-        {
-          write (1, format, 1);
-            chara_print++;
-        }
+	while (*format)
+	{
+		if (*format != '%')
+		{
+			write (1, format, 1);
+			chara_print++;
+		}
+		else
+		{
+			format++;
+			if (*format == '\0')
+				break;
 
-        else if (*format == 'c')
-        {
-          char c = va_arg(list, int);
-          write (1, &c, 1);
-          chara_print++;
-        }
-        else if (*format == 's')
-        {
-          char *str = va_arg(list, char*);
-          int str_len = 0;
+			if (*format == '%')
+			{
+				write (1, format, 1);
+				chara_print++;
+			}
 
-          while (str[str_len] != '\0')
-            str_len++;
-          write (1, str, str_len);
-          chara_print += str_len;
-        }
-      }
-      format++;
-    }
-  va_end(list);
-  return (chara_print);
+			else if (*format == 'c')
+			{
+				char c = va_arg(list, int);
+				write (1, &c, 1);
+				chara_print++;
+			}
+			else if (*format == 's')
+			{
+				char *str = va_arg(list, char*);
+				int str_len = 0;
+					
+					while (str[str_len] != '\0')
+						str_len++;
+				write (1, str, str_len);
+				chara_print += str_len;
+			}
+		}
+		format++;
+	}
+	va_end(list);
+	return (chara_print);
 }
