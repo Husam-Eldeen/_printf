@@ -13,9 +13,9 @@ int putss(char *c)
 
 	if (c)
 	{
-		for (count == 0; c[count] != '\0'; count++)
+		for (count = 0; c[count] != '\0'; count++)
 		{
-			putchar(c[count]);
+			_putchar(c[count]);
 		}
 	}
 	return (count);

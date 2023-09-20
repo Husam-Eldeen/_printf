@@ -12,13 +12,13 @@ int _printf(const char *format, ...)
 	unsigned int i, str_count, count = 0;
 	va_list args;
 
-	va_satrt(args, format);
+	va_start(args, format);
 
 	for (i = 0; format[i] != '\0'; i++)
 	{
 		if (format[i] != '%')
 		{
-			putchar(format[i]);
+			_putchar(format[i]);
 
 		}
 
@@ -30,7 +30,7 @@ int _printf(const char *format, ...)
 		}
 		else if (format[i] == '%' && format[i + 1] == 's')
 		{
-			str_count = putss(va_arg(args, *char));
+			str_count = putss(va_arg(args, char*));
 			i++;
 			count += (str_count - 1);
 		}
