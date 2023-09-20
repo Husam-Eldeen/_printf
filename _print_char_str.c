@@ -3,59 +3,46 @@
 /*
  * _printf - function that produces output
  * according to a format.
- * @chara_print: character printer.
- * return: format.
+ * @format: format specifier.
+ * Return: number of bytes printed.
  */
+
 int _printf(const char *format, ...)
 {
-	int chara_print = 0;
-	va_list list;
+	unsigned int i, str_count, count = 0;
+	va_list args;
 
-	if (format == NULL)
+	va_satrt(args, format);
 
-		return (-1);
-
-	va_start(list, format);
-
-	while (*format)
+	for (i = 0; format[i] != '\0'; i++)
 	{
-		if (*format != '%')
+		if (format[i] != '%')
 		{
-			write(1, format, 1);
-			chara_print++;
+			putchar(format[i]);
+
 		}
-		else
+
+		else if (format[i] == '%' && format[i + 1] == 'c')
 		{
-			format++;
-			if (*format == '\0')
-				break;
+			putchar(va_arg(args, int));
+			i++;
 
-			if (*format == '%')
-			{
-				write(1, format, 1);
-				chara_print++;
-			}
-
-			else if (*format == 'c')
-			{
-				char c = va_arg(list, int);
-
-				write(1, &c, 1);
-				chara_print++;
-			}
-			else if (*format == 's')
-			{
-				char *str = va_arg(list, char*);
-				int str_len = 0;
-
-				while (str[str_len] != '\0')
-						str_len++;
-				write(1, str, str_len);
-				chara_print += str_len;
-			}
 		}
-		format++;
+		else if (format[i] == '%' && format[i + 1] == 's')
+		{
+			str_count = putss(va_arg(args, *char));
+			i++;
+			count += (str_count - 1);
+		}
+		else if (format[i] == '%' && format[i + 1] == '%')
+		{
+			putchar('%');
+		}
+		count += 1;
+
 	}
-	va_end(list);
-	return (chara_print);
+
+	va_end(args);
+	return (count);
+
 }
