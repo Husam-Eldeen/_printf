@@ -3,6 +3,7 @@
 /*
  * _printf - function that produces output
  * according to a format.
+ * @chara_print: character printer.
  * return: format.
  */
 int _printf(const char *format, ...)
